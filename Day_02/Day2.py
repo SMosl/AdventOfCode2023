@@ -8,7 +8,7 @@ def main(part):
 	with open(f"{dir_path}/input.txt", "r") as f:
 		output = [0,0]
 		while(len(line := f.readline().strip()) != 0):
-			ID = int(re.search('\d+', line.split(':')[0]).group())
+			ID = int(re.search(r'Game (\d+):', line).group(1))
 			line_data = line.split(':')[1]
 
 			blue = max([int(x) for x in re.findall(r'(\d+) blue', line_data)])
