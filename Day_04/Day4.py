@@ -20,7 +20,7 @@ def main(part):
 				total += score
 		else:
 			for x in range(len(my_winning_numbers)):
-				num_cards[card_number + x] = (num_cards[card_number + x][0], num_cards[card_number + x][1] + num_cards[card_number - 1][1])
+				num_cards[card_number + x + 1] = (num_cards[card_number + x + 1][0], num_cards[card_number + x + 1][1] + num_cards[card_number][1])
 
 	if part == 1:
 		return total
