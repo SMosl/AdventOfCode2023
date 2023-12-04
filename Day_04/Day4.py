@@ -8,7 +8,7 @@ def main(part):
 		lines = f.read().splitlines()
 
 	total = 0
-	num_cards = [(x + 1, 1) for x in range(len(lines))]
+	num_cards = [1 for _ in range(len(lines))]
 	for card_number, line in enumerate(lines):
 		line = (line.split(':')[1]).split('|')
 		values = [set(re.findall(r'\d+',line[x])) for x in (0,1)]
@@ -19,12 +19,12 @@ def main(part):
 				total += score
 		else:
 			for x in range(len(my_winning_numbers)):
-				num_cards[card_number + x + 1] = (num_cards[card_number + x + 1][0], num_cards[card_number + x + 1][1] + num_cards[card_number][1])
+				num_cards[card_number + x + 1] = num_cards[card_number + x + 1] + num_cards[card_number]
 
 	if part == 1:
 		return total
 	else:
-		return (sum([x[1] for x in num_cards]))
+		return (sum(num_cards))
 
 if __name__ == "__main__":
 	start_time = time.time()
