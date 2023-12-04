@@ -9,7 +9,6 @@ def main(part):
 
 	total = 0
 	num_cards = [(x + 1, 1) for x in range(len(lines))]
-
 	for card_number, line in enumerate(lines):
 		line = (line.split(':')[1]).split('|')
 		values = [set(re.findall(r'\d+',line[x])) for x in (0,1)]
