@@ -1,6 +1,7 @@
 import os
 import time
 from collections import Counter
+import itertools
 
 def main1():
 	values = []
@@ -45,13 +46,12 @@ def main1():
 			sorted_by_type[5].append(values[i])
 		else:
 			sorted_by_type[6].append(values[i])
-
+	
+	# Sort the hands of each type alphabetically
 	for type in sorted_by_type:
 		type.sort(key=lambda x: x[0])
-	
-	sorted_hands = []
-	for type in sorted_by_type:
-		sorted_hands += type
+	# Expand the list of hands into a singl fully ordered list to then sum 
+	sorted_hands = list(itertools.chain.from_iterable(sorted_by_type))
 
 	return(sum((x[1] * (i + 1)) for i, x in enumerate(reversed(sorted_hands))))
 
@@ -85,7 +85,7 @@ def main2():
 	for i, hand in enumerate(values):
 		num_jokers = hand[0].count('P')
 		counts = Counter(hand[0]).most_common()
-		if counts[0][1] == 5:
+		if num_jokers == 5:
 			sorted_by_type[0].append(values[i])
 		else:
 			counts = [x for x in counts if x[0] != 'P']
@@ -105,12 +105,11 @@ def main2():
 			else:
 				sorted_by_type[6].append(values[i])
 
+	# Sort the hands of each type alphabetically
 	for type in sorted_by_type:
 		type.sort(key=lambda x: x[0])
-	
-	sorted_hands = []
-	for type in sorted_by_type:
-		sorted_hands += type
+	# Expand the list of hands into a singl fully ordered list to then sum 
+	sorted_hands = list(itertools.chain.from_iterable(sorted_by_type))
 
 	return(sum((x[1] * (i + 1)) for i, x in enumerate(reversed(sorted_hands))))
 
