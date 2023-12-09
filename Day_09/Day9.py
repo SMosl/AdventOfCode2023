@@ -19,13 +19,13 @@ def main(part):
 		while len(set(differences)) != 1:
 			differences = [b - a for a, b in itertools.pairwise(differences)]
 			history.insert(0, differences)
-		
+
 		history.insert(0, [0 for _ in range(len(differences) - 1)])
 
 		for i in range(1, len(history)):
 			history[i].append(history[i][-1] + history[i-1][-1])
 			history[i].insert(0, history[i][0] - history[i-1][0])
-		
+
 		next_values.append(history[-1][-1])
 		prev_values.append(history[-1][0])
 
