@@ -3,45 +3,14 @@ import time
 import re
 import math
 
-def main_part_1():
+def main(part):
 	dir_path = os.path.dirname(os.path.realpath(__file__))
 	with open(f"{dir_path}/input.txt", "r") as f:
 		[raw_workflows, raw_ratings] = f.read().split('\n\n')
 
 	workflows = {}
-	parts = []
-	A = set()
-
 	raw_workflows = raw_workflows.splitlines()
-	for w in raw_workflows:
-		w_name, w_instructions = w[:-1].split('{')
-		w_instructions = w_instructions.split(',')
-		workflows[w_name] = []
-		for instruction in w_instructions[:-1]:
-			b = re.match(r'(?P<category>[a-zA-Z]+)(?P<operator>[><])(?P<value>\d+):(?P<destination>[a-zA-Z]+)', instruction)
-			workflows[w_name].append([b['category'], b['operator'], int(b['value']), b['destination']])
-		workflows[w_name].append(w_instructions[-1])
-
-	raw_ratings = raw_ratings.splitlines()
-	for r in raw_ratings:
-		parts.append([int(x) for x in re.split(',|=', r[1:-1]) if x.isnumeric()])
 	
-	for part in parts:
-		w_name = 'in'
-		while w_name not in {'A','R'}:
-			w_name = find_next_w(part, w_name, workflows)
-		if w_name == 'A':
-			A.add(sum(part))
-	return(sum(A))
-
-def main_part_2():
-	dir_path = os.path.dirname(os.path.realpath(__file__))
-	with open(f"{dir_path}/input.txt", "r") as f:
-		raw_workflows = f.read().split('\n\n')[0]
-
-	workflows = {}
-
-	raw_workflows = raw_workflows.splitlines()
 	for w in raw_workflows:
 		w_name, w_instructions = w[:-1].split('{')
 		w_instructions = w_instructions.split(',')
@@ -51,17 +20,32 @@ def main_part_2():
 			workflows[w_name].append([b['category'], b['operator'], int(b['value']), b['destination']])
 		workflows[w_name].append(w_instructions[-1])
 
-	parts = [[(1,4000), (1,4000), (1,4000), (1,4000), 'in']]
-	A = 0
-	while parts:
-		p = parts.pop(0)
-		if p[-1] == 'A':
-			A += math.prod([(x[1] - x[0] + 1) for x in p[:-1]])
-		elif p[-1] != 'R':
-			parts += find_next_w_regions(p, workflows[p[-1]])
+	if part == 1:
+		raw_ratings = raw_ratings.splitlines()
+		parts = []
+		A = set()
 
-	return(A)
+		for r in raw_ratings:
+			parts.append([int(x) for x in re.split(',|=', r[1:-1]) if x.isnumeric()])
+		
+		for p in parts:
+			w_name = 'in'
+			while w_name not in {'A','R'}:
+				w_name = find_next_w(p, w_name, workflows)
+			if w_name == 'A':
+				A.add(sum(p))
+		return(sum(A))
+	else:
+		parts = [[(1,4000), (1,4000), (1,4000), (1,4000), 'in']]
+		A = 0
 
+		while parts:
+			p = parts.pop(0)
+			if p[-1] == 'A':
+				A += math.prod([(x[1] - x[0] + 1) for x in p[:-1]])
+			elif p[-1] != 'R':
+				parts += find_next_w_regions(p, workflows[p[-1]])
+		return(A)
 
 
 def find_next_w(part, w_name, workflows):
@@ -106,8 +90,8 @@ def find_next_w_regions(p, workflow):
 
 if __name__ == "__main__":
 	start_time = time.time()
-	print(f" Part 1 solution: {main_part_1()}")
+	print(f" Part 1 solution: {main(1)}")
 	print("Part 1 finished --- %s seconds ---" % (time.time() - start_time))
 	mid_time = time.time()
-	print(f" Part 2 solution: {main_part_2()}")
+	print(f" Part 2 solution: {main(2)}")
 	print("Part 2 finished --- %s seconds ---" % (time.time() - mid_time))
