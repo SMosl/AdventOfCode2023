@@ -26,8 +26,6 @@ def main_part_2():
 	with open(f"{dir_path}/input.txt", "r") as f:
 		while(len(line := f.readline()) != 0):
 			line = list(line.strip().replace('S','.') * 5)
-			"""if 'S' in line:
-				start = (len(data), line.index('S'))"""
 			data.append(line)
 		data = data * 5
 
@@ -64,7 +62,9 @@ def main_part_2():
 		ie if the starting coordinate S == '.', the central points of adjacent input grids will be 'O', whose adjacent grids will then have a central '.' etc.
 	Part 2 requres the 26501365th step, note that  26501365 = 131*202300 + 65
 	"""
-	quadratic_cases_x = (65, 131 + 65, (131 * 2) + 65)
+	cycle_length = 131
+	offset = 65
+	quadratic_cases_x = (offset, cycle_length + offset, (cycle_length * 2) + offset)
 	quadratic_cases_y = [0, 0, 0]
 	for i, val in enumerate(quadratic_cases_x):
 		valid_plots = {start}
@@ -72,7 +72,8 @@ def main_part_2():
 			valid_plots = next_step(valid_plots, data)
 		quadratic_cases_y[i] = len(valid_plots)
 	
-	eqns = np.array([[1, 65, 65**2],[1, 131 + 65, (131 + 65)**2], [1, ((131 * 2) + 65), ((131 * 2) + 65)**2]])
+	# Solve set of simultaneous equations f(65) = quadratic_cases_y[0], f(65 + 131) = quadratic_cases_y[1] and f(65 + 131*2) = quadratic_cases_y[2] where f(x) is quadratic
+	eqns = np.array([[1, offset, offset**2],[1, cycle_length + offset, (cycle_length + offset)**2], [1, ((cycle_length * 2) + offset), ((cycle_length * 2) + offset)**2]])
 	solns = np.array(quadratic_cases_y)
 	coefficients = np.linalg.solve(eqns, solns)
 	x = 26501365
