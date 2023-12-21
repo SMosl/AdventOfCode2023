@@ -40,11 +40,11 @@ def main_part_2():
 	The input consists of an empty central row and column (other than containing 'S') and empty diagonal lines of space
 	from the centre of the top row to the centre of each side, then down to the centre of the bottom row, forming a diamond.
 
-	'S' is 65 units away from each side of the input square, which hence has dimensions 131 x 131.
-	By construction, after 65 steps, the outer limits of the visited space will be on the centre of each of the 4 sides.
+	'S' is 65 units away from each side of the input square, which has dimensions 131 x 131.
+	After 65 steps, the outer limits of the visited space will be on the centre of each of the 4 sides due to the empty centre row and column.
 	If the input is then repeated infinitely, after 131 + 65 steps, the visited space will be contained within, and reached the boundary of,
 	a diamond made up of a 3 x 3 grid of the input, again due to the empty central line and column.
-	After 131 + 131 + 65 steps, the visited space is contained within and on the boundary line of a diamond made up of a 5 x 5 grid of inputs.
+	After 131 + 131 + 65 steps, the visited space is contained within, and on, the boundary line of a diamond made up of a 5 x 5 grid of inputs.
 	-------
 	|D ^ A|
 	| / \ |
