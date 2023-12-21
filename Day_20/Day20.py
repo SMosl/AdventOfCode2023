@@ -66,7 +66,7 @@ def main(part):
 		i = 1000
 	else:
 		# run part 2 for an aribitrarily large amount of time in order to determine cycle length
-		i = 100000
+		i = 10000
 
 	pulses = []
 	pulse_counts = [0, 0]
